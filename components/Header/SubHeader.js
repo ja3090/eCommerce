@@ -10,10 +10,10 @@ export default function SubHeader() {
     <div className={styles["header-first-section"]}>
       <a
         className={styles["git-link"]}
-        href="https://github.com/jaw162/eCommerce"
+        href="https://github.com/jaw163/eCommerce"
       >
         <GitLogo />
-        <p>github.com/jaw162/eCommerce</p>
+        <p>github.com/jaw163/eCommerce</p>
       </a>
       {user ? (
         <a className={styles["sign-in"]}>
