@@ -1,29 +1,28 @@
-import Layout from "../components/Layout";
-import styles from "../styles/Checkout.module.css";
-import { useContext, useState } from "react";
-import BasketContext from "../context/ShoppingBasket";
-import { loadStripe } from "@stripe/stripe-js";
-import { handleSubmit } from "../utils/postBasket";
-import AuthContext from "../context/AuthContext";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Image from "next/image";
-import ProductList from "../components/ProductList";
+import Layout from "../components/Layout"
+import styles from "../styles/Checkout.module.css"
+import { useContext, useState } from "react"
+import BasketContext from "../context/ShoppingBasket"
+import { loadStripe } from "@stripe/stripe-js"
+import { handleSubmit } from "../utils/postBasket"
+import AuthContext from "../context/AuthContext"
+import { toast } from "react-toastify"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import ProductList from "../components/ProductList"
 
 const Checkout = () => {
-  const { items, total } = useContext(BasketContext);
-  const { user } = useContext(AuthContext);
+  const { items, total } = useContext(BasketContext)
+  const { user } = useContext(AuthContext)
 
-  const [address, setAddress] = useState({
+  const [address, _setAddress] = useState({
     name: "Test User",
     street: "123 Street",
     postCode: "AB12 CD3",
-  });
+  })
 
   const stripePromise = loadStripe(
     "pk_test_51MQgfsEHzbYikqR4yVwz3IlUwNOojN25I6zugQXbAdfiJJP1BA8lcKolFN9sZC3ht0lHaYc0dwSDFoV44i4b5AEX001pWHTxkB"
-  );
+  )
 
   return (
     <Layout>
@@ -56,6 +55,6 @@ const Checkout = () => {
         </form>
       </div>
     </Layout>
-  );
-};
-export default Checkout;
+  )
+}
+export default Checkout
