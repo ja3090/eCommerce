@@ -1,14 +1,19 @@
 import styles from "../../styles/ProductsView.module.css"
 import DownArrow from "../../public/icons/down-arrow.svg"
 import ProductsContext from "../../context/ProductsContext"
-import { useContext, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import Pagination from "../Pagination"
 import SortBtns from "./SortBtns"
+import useClickOutsideToClose from "../../utils/hooks/useClickOutsideToClose"
 
 export default function ProductsView() {
   const { setActive, activeSort, items } = useContext(ProductsContext)
 
   const [isClicked, setClicked] = useState(false)
+
+  const sortBtnRef = useRef(null)
+
+  const _ = useClickOutsideToClose(setClicked, sortBtnRef)
 
   return (
     <div className={styles.container}>
@@ -18,6 +23,7 @@ export default function ProductsView() {
           <div
             className={styles["sort-btn"]}
             onClick={() => setClicked(!isClicked)}
+            ref={sortBtnRef}
           >
             <p>Sort</p>
             <div
