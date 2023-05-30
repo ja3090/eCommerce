@@ -1,24 +1,24 @@
-import { useRouter } from "next/router";
-import { useGetOrder } from "../../utils/getOrder";
-import Layout from "../../components/Layout";
-import styles from "../../styles/OrderConfirmedPage.module.css";
-import ProductList from "../../components/ProductList";
-import BasketContext from "../../context/ShoppingBasket";
-import { useEffect, useContext } from "react";
+import { useRouter } from "next/router"
+import { useGetOrder } from "../../utils/hooks/getOrder"
+import Layout from "../../components/Layout"
+import styles from "../../styles/OrderConfirmedPage.module.css"
+import ProductList from "../../components/ProductList"
+import BasketContext from "../../context/ShoppingBasket"
+import { useEffect, useContext } from "react"
 
 export default function OrderConfirmed() {
-  const router = useRouter();
-  const { resetItems } = useContext(BasketContext);
+  const router = useRouter()
+  const { resetItems } = useContext(BasketContext)
 
-  const { uuid } = router.query;
+  const { uuid } = router.query
 
-  const data = useGetOrder(uuid);
+  const data = useGetOrder(uuid)
 
   useEffect(() => {
-    if (data.loaded && data.order.length) resetItems();
-  }, [resetItems, data.order.length, data.loaded]);
+    if (data.loaded && data.order.length) resetItems()
+  }, [resetItems, data.order.length, data.loaded])
 
-  const total = (arr) => arr.reduce((a, b) => a + b.price, 0);
+  const total = (arr) => arr.reduce((a, b) => a + b.price, 0)
 
   return (
     <Layout>
@@ -54,5 +54,5 @@ export default function OrderConfirmed() {
           ))}
       </div>
     </Layout>
-  );
+  )
 }

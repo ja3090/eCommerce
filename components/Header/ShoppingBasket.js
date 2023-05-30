@@ -3,9 +3,11 @@ import Cross from "../../public/icons/cross.svg"
 import BasketContext from "../../context/ShoppingBasket"
 import { useContext } from "react"
 import styles from "../../styles/Header.module.css"
+import AuthContext from "../../context/AuthContext"
 
 export default function ShoppingBasket({ router }) {
   const { items, total, setOpen, basketOpen } = useContext(BasketContext)
+  const { user } = useContext(AuthContext)
   return (
     <div
       className={`${styles["shopping-basket"]} ${
@@ -29,10 +31,17 @@ export default function ShoppingBasket({ router }) {
         {items.length ? (
           <button
             className={styles["checkout-button-container"]}
-            onClick={() => {
-              router.push("/checkout")
-              setOpen(false)
-            }}
+            onClick={
+              user
+                ? () => {
+                    router.push("/checkout")
+                    setOpen(false)
+                  }
+                : () => {
+                    router.push("/login")
+                    setOpen(false)
+                  }
+            }
           >
             Checkout
           </button>

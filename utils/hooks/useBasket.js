@@ -3,7 +3,7 @@ import Cookies from "js-cookie"
 
 const initialTotal = { price: 0, quantity: 0 }
 
-export default function useBasket() {
+export default function usePaginate() {
   const [items, setItems] = useState([])
   const [total, setTotal] = useState(initialTotal)
 

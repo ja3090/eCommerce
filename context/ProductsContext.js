@@ -1,12 +1,36 @@
-import { createContext } from "react"
-import useSortAndFilters from "../utils/useSortAndFilters"
-import usePaginate from "../utils/usePaginate"
+import { createContext, useState, useEffect } from "react"
+import useSortAndFilters from "../utils/hooks/useSortAndFilters"
+import usePaginate from "../utils/hooks/usePaginate"
 import { useMemo } from "react"
 import ProductCard from "../components/ProductCard"
+import { API_URL } from "../config"
+
+const getProducts = async () => {
+  const res = await fetch(`${API_URL}/api/products?populate=*`)
+
+  const data = await res.json()
+
+  return data
+}
 
 const ProductsContext = createContext()
 
-export const ProductsProvider = ({ children, products }) => {
+export const ProductsProvider = ({ children }) => {
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await getProducts()
+        setProducts(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchData()
+  }, [])
+
   const {
     clearFilters,
     applyFilters,
@@ -20,11 +44,13 @@ export const ProductsProvider = ({ children, products }) => {
   const { totalPages, paginatedItems, setPage, currentPage } =
     usePaginate(items)
 
-  const paginatedProductCards = useMemo(() => {
-    return paginatedItems.map((item) => (
-      <ProductCard key={item.id} product={item} />
-    ))
-  }, [paginatedItems])
+  const paginatedProductCards = useMemo(
+    () =>
+      paginatedItems.map((item) => (
+        <ProductCard key={item.id} product={item} />
+      )),
+    [paginatedItems]
+  )
 
   return (
     <ProductsContext.Provider

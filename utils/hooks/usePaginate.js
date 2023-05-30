@@ -7,17 +7,9 @@ export default function usePaginate(array) {
 
   const totalPages = Math.ceil(array.length / perPage)
 
-  const getPageNoFromSession = () => {
-    const pageNumber = sessionStorage.getItem("page")
-    if (pageNumber) {
-      setPage(Number(pageNumber))
-    }
-  }
-
   const onNextPageClick = () => {
     const nextPage = array.slice(0, perPage * currentPage)
     setItems(nextPage)
-    sessionStorage.setItem("page", currentPage)
   }
 
   const adjustColumnsForScreenWidth = () => {
@@ -34,8 +26,6 @@ export default function usePaginate(array) {
       setPerPage(12)
     }
   }
-
-  useEffect(getPageNoFromSession, [])
 
   useEffect(onNextPageClick, [currentPage, array, perPage])
 

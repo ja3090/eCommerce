@@ -7,7 +7,7 @@ import WriteReview from "../../components/Reviews/WriteReview"
 import { useRouter } from "next/router"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { useWindowDimensions } from "../../utils/windowDimensions"
+import { useWindowDimensions } from "../../utils/hooks/windowDimensions"
 import SlugHero from "../../components/SlugHero"
 import ReviewSection from "../../components/Reviews/ReviewSection"
 

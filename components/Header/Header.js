@@ -1,6 +1,6 @@
 import styles from "../../styles/Header.module.css"
 import { useRouter } from "next/router"
-import { useScrollingUp } from "../../utils/isScrollingUp"
+import { useScrollingUp } from "../../utils/hooks/isScrollingUp"
 import ShoppingBasket from "./ShoppingBasket"
 import MainHeader from "./MainHeader"
 import SubHeader from "./SubHeader"

@@ -1,10 +1,13 @@
 import styles from "../styles/Pagination.module.css"
 import ProductsContext from "../context/ProductsContext"
 import { useContext } from "react"
+import useReturnToScrollPosition from "../utils/hooks/useReturnToScrollPosition"
 
 export default function Pagination() {
   const { setPage, currentPage, totalPages, paginatedProductCards } =
     useContext(ProductsContext)
+
+  const _ = useReturnToScrollPosition()
 
   return (
     <div className={styles.container}>
