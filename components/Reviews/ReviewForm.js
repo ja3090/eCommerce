@@ -44,6 +44,7 @@ export default function ReviewForm({
         <input
           maxLength="20"
           name="heading"
+          defaultValue={review.heading}
           onChange={(e) => handleChange(e)}
         />
       </div>
