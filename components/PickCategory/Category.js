@@ -1,4 +1,4 @@
-import styles from "../styles/PickCategory.module.css"
+import styles from "../../styles/PickCategory.module.css"
 
 export default function Category({
   handleCategoryClick,

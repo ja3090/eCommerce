@@ -1,4 +1,4 @@
-import Review from "../../components/Reviews/Review"
+import Review from "."
 import styles from "../../styles/ProductPage.module.css"
 import AuthContext from "../../context/AuthContext"
 import { useContext } from "react"

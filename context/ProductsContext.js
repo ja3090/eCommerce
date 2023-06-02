@@ -1,55 +1,38 @@
-import { createContext, useState, useEffect } from "react"
-import useSortAndFilters from "../utils/hooks/useSortAndFilters"
-import usePaginate from "../utils/hooks/usePaginate"
+import { createContext } from "react"
 import { useMemo } from "react"
 import ProductCard from "../components/ProductCard"
-import { API_URL } from "../config"
-
-const getProducts = async () => {
-  const res = await fetch(`${API_URL}/api/products?populate=*`)
-
-  const data = await res.json()
-
-  return data
-}
+import useGetProducts from "../utils/hooks/getProducts"
+import useCustomerQueries from "../utils/hooks/useCustomerQueries"
 
 const ProductsContext = createContext()
 
 export const ProductsProvider = ({ children }) => {
-  const [products, setProducts] = useState([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await getProducts()
-        setProducts(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    fetchData()
-  }, [])
-
   const {
-    clearFilters,
     applyFilters,
+    setApplied,
+    clearFilters,
     setActive,
     activeSort,
+    needsRefresh,
+    finishRefresh,
+    fullQuery,
     applied,
-    setApplied,
-    items,
-  } = useSortAndFilters(products)
+    setPage,
+    currentPage,
+    perPage,
+  } = useCustomerQueries()
 
-  const { totalPages, paginatedItems, setPage, currentPage } =
-    usePaginate(items)
+  const { products, totalPages } = useGetProducts({
+    needsRefresh,
+    finishRefresh,
+    fullQuery,
+    currentPage,
+    perPage,
+  })
 
   const paginatedProductCards = useMemo(
-    () =>
-      paginatedItems.map((item) => (
-        <ProductCard key={item.id} product={item} />
-      )),
-    [paginatedItems]
+    () => products.map((item) => <ProductCard key={item.id} product={item} />),
+    [products]
   )
 
   return (
@@ -58,15 +41,13 @@ export const ProductsProvider = ({ children }) => {
         applyFilters,
         setActive,
         activeSort,
-        items,
+        items: products,
         clearFilters,
         applied,
         setApplied,
         totalPages,
-        items,
         setPage,
         currentPage,
-        paginatedItems,
         paginatedProductCards,
       }}
     >

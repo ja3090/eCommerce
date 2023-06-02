@@ -1,13 +1,13 @@
-import styles from "../styles/PickCategory.module.css"
-import CameraIcon from "../public/icons/device-camera-image.svg"
-import ComputerIcon from "../public/icons/device-computer.svg"
-import AudioIcon from "../public/icons/device-earphone-headphone.svg"
-import LaptopIcon from "../public/icons/device-laptop-notebook.svg"
-import MicIcon from "../public/icons/device-microphone-voice.svg"
-import MouseIcon from "../public/icons/device-mouse-cursor.svg"
-import DownArrow from "../public/icons/down-arrow.svg"
-import Phone from "../public/icons/device-smartphone.svg"
-import ProductsContext from "../context/ProductsContext"
+import styles from "../../styles/PickCategory.module.css"
+import CameraIcon from "../../public/icons/device-camera-image.svg"
+import ComputerIcon from "../../public/icons/device-computer.svg"
+import AudioIcon from "../../public/icons/device-earphone-headphone.svg"
+import LaptopIcon from "../../public/icons/device-laptop-notebook.svg"
+import MicIcon from "../../public/icons/device-microphone-voice.svg"
+import MouseIcon from "../../public/icons/device-mouse-cursor.svg"
+import DownArrow from "../../public/icons/down-arrow.svg"
+import Phone from "../../public/icons/device-smartphone.svg"
+import ProductsContext from "../../context/ProductsContext"
 import { useContext, useState } from "react"
 import Category from "./Category"
 
@@ -16,10 +16,6 @@ export default function PickCategory() {
     useContext(ProductsContext)
 
   const [clicked, setClicked] = useState(false)
-
-  const handleCategoryClick = (category) => {
-    setApplied({ ...applied, [category]: !applied[category] })
-  }
 
   return (
     <div className={styles.container}>
@@ -35,49 +31,49 @@ export default function PickCategory() {
             }`}
           >
             <Category
-              handleCategoryClick={handleCategoryClick}
+              handleCategoryClick={setApplied}
               applied={applied.Computer}
               categoryName={"Computer"}
             >
               <ComputerIcon />
             </Category>
             <Category
-              handleCategoryClick={handleCategoryClick}
+              handleCategoryClick={setApplied}
               applied={applied.Laptop}
               categoryName={"Laptop"}
             >
               <LaptopIcon />
             </Category>
             <Category
-              handleCategoryClick={handleCategoryClick}
+              handleCategoryClick={setApplied}
               applied={applied.Mobile}
               categoryName={"Mobile"}
             >
               <Phone />
             </Category>
             <Category
-              handleCategoryClick={handleCategoryClick}
+              handleCategoryClick={setApplied}
               applied={applied.Audio}
               categoryName={"Audio"}
             >
               <AudioIcon />
             </Category>
             <Category
-              handleCategoryClick={handleCategoryClick}
+              handleCategoryClick={setApplied}
               applied={applied.Recording}
               categoryName={"Recording"}
             >
               <MicIcon />
             </Category>
             <Category
-              handleCategoryClick={handleCategoryClick}
+              handleCategoryClick={setApplied}
               applied={applied.Accessories}
               categoryName={"Accessories"}
             >
               <MouseIcon />
             </Category>
             <Category
-              handleCategoryClick={handleCategoryClick}
+              handleCategoryClick={setApplied}
               applied={applied.Photography}
               categoryName={"Photography"}
             >

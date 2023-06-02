@@ -1,5 +1,5 @@
 import Rating from "./Rating"
-import ProductInfo from "./ProductInfo/ProductInfo"
+import ProductInfo from "./ProductInfo"
 import { useContext } from "react"
 import BasketContext from "../context/ShoppingBasket"
 import styles from "../styles/ProductPage.module.css"

@@ -1,5 +1,5 @@
 import Layout from "../../components/Layout"
-import ProductInfo from "../../components/ProductInfo/ProductInfo"
+import ProductInfo from "../../components/ProductInfo"
 import { API_URL } from "../../config/index"
 import { useEffect, useState } from "react"
 import styles from "../../styles/ProductPage.module.css"

@@ -1,4 +1,4 @@
-import Header from "./Header/Header"
+import Header from "./Header"
 import Footer from "./Footer"
 import styles from "../styles/LayoutStyling.module.css"
 import Head from "next/head"

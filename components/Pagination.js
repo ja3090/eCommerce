@@ -7,6 +7,8 @@ export default function Pagination() {
   const { setPage, currentPage, totalPages, paginatedProductCards } =
     useContext(ProductsContext)
 
+  console.log(totalPages)
+
   const _ = useReturnToScrollPosition()
 
   return (
