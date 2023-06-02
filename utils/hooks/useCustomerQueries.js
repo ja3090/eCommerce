@@ -22,7 +22,7 @@ export const initialState = {
   },
   pageQueries: {
     currentPage: 1,
-    perPage: 3,
+    perPage: 12,
   },
 }
 
