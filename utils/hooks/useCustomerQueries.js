@@ -3,7 +3,6 @@ import { rootReducer } from "../reducers"
 
 export const initialState = {
   needsRefresh: false,
-  // fullQueryString: "",
   filterQueries: {
     applied: {
       Computer: false,
@@ -37,10 +36,7 @@ export default function useCustomerQueries() {
   const [state, dispatch] = useReducer(rootReducer, initialState)
 
   return {
-    applyFilters: () => {
-      dispatch({ type: "applyFilters" })
-      dispatch({ type: "needsRefresh", payload: true })
-    },
+    applyFilters: () => dispatch({ type: "needsRefresh", payload: true }),
     setApplied: (category) => {
       dispatch({ type: "setApplied", payload: category })
     },
