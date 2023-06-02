@@ -10,18 +10,18 @@ export default function sortReducer(state, action) {
       return {
         ...state,
         activeSort: "sortZToA",
-        sortQuery: "sort[0]=Name&Adesc",
+        sortQuery: "sort[0]=Name%3Adesc",
       }
     case "sortHToL":
       return {
         activeSort: "sortHToL",
-        sortQuery: "sort[0]=Price",
+        sortQuery: "sort[0]=Price%3Adesc",
       }
     case "sortLToH":
       return {
         ...state,
         activeSort: "sortLToH",
-        sortQuery: "sort[0]=Price&Aasc",
+        sortQuery: "sort[0]=Price%3Aasc",
       }
     default:
       return state
