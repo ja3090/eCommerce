@@ -1,27 +1,12 @@
 export default function sortReducer(state, action) {
   switch (action.type) {
-    case "sortAToZ":
+    case "sort":
+      const { activeSort, sortBy, order } = action.payload
+
       return {
         ...state,
-        activeSort: "sortAToZ",
-        sortQuery: "sort[0]=Name",
-      }
-    case "sortZToA":
-      return {
-        ...state,
-        activeSort: "sortZToA",
-        sortQuery: "sort[0]=Name%3Adesc",
-      }
-    case "sortHToL":
-      return {
-        activeSort: "sortHToL",
-        sortQuery: "sort[0]=Price%3Adesc",
-      }
-    case "sortLToH":
-      return {
-        ...state,
-        activeSort: "sortLToH",
-        sortQuery: "sort[0]=Price%3Aasc",
+        activeSort: activeSort,
+        sortQuery: `sort[0]=${sortBy}%3A${order}`,
       }
     default:
       return state

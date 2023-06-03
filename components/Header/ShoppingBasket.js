@@ -18,7 +18,7 @@ export default function ShoppingBasket({ router }) {
         <h3>Your Basket</h3>
         <Cross onClick={() => setOpen(false)} className={styles.cross} />
       </div>
-      <div className={styles["basket-products"]}>
+      <div className={`${styles["basket-products"]} custom-scrollbar`}>
         {items.map((product) => (
           <ShoppingBasketCard key={product.id} product={product} />
         ))}

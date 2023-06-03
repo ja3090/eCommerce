@@ -41,8 +41,8 @@ export default function useCustomerQueries() {
       dispatch({ type: "setApplied", payload: category })
     },
     clearFilters: () => dispatch({ type: "clearFilters" }),
-    setActive: (sort) => {
-      dispatch({ type: sort })
+    setActive: (payload) => {
+      dispatch({ type: "sort", payload })
       dispatch({ type: "needsRefresh", payload: true })
     },
     activeSort: state.sortQueries.activeSort,

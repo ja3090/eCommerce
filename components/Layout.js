@@ -5,7 +5,7 @@ import Head from "next/head"
 
 export default function Layout({ title, keywords, description, children }) {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} custom-scrollbar`}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />

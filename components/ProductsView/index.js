@@ -43,6 +43,8 @@ export default function ProductsView() {
               btnName={"sortAToZ"}
               activeSort={activeSort}
               setActive={setActive}
+              sortBy={"Name"}
+              order={"asc"}
             >
               A-Z
             </SortBtns>
@@ -50,6 +52,8 @@ export default function ProductsView() {
               btnName={"sortZToA"}
               activeSort={activeSort}
               setActive={setActive}
+              sortBy={"Name"}
+              order={"desc"}
             >
               Z-A
             </SortBtns>
@@ -57,6 +61,8 @@ export default function ProductsView() {
               btnName={"sortHToL"}
               activeSort={activeSort}
               setActive={setActive}
+              sortBy={"Price"}
+              order={"desc"}
             >
               Price H-L
             </SortBtns>
@@ -64,6 +70,8 @@ export default function ProductsView() {
               btnName={"sortLToH"}
               activeSort={activeSort}
               setActive={setActive}
+              sortBy={"Price"}
+              order={"asc"}
             >
               Price L-H
             </SortBtns>
