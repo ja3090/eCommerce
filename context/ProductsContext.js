@@ -1,33 +1,46 @@
-import { createContext } from "react"
+import { createContext, useContext } from "react"
 import { useMemo } from "react"
 import ProductCard from "../components/ProductCard"
 import useGetProducts from "../utils/hooks/getProducts"
 import useCustomerQueries from "../utils/hooks/useCustomerQueries"
+import useGetCategories from "../utils/hooks/getCategories"
 
 const ProductsContext = createContext()
 
-export const ProductsProvider = ({ children }) => {
+const useProductsContext = () => {
+  const context = useContext(ProductsContext)
+  if (context === undefined) {
+    throw new Error(
+      "useProductsContext must be used within a ProductsContextProvider"
+    )
+  }
+  return context
+}
+
+const ProductsProvider = ({ children }) => {
+  const categories = useGetCategories()
+
   const {
     applyFilters,
     setApplied,
     clearFilters,
     setActive,
     activeSort,
-    needsRefresh,
-    finishRefresh,
     fullQuery,
     applied,
     setPage,
     currentPage,
     perPage,
-  } = useCustomerQueries()
+    finishRefresh,
+    needsRefresh,
+  } = useCustomerQueries(categories)
 
   const { products, totalPages } = useGetProducts({
-    needsRefresh,
-    finishRefresh,
     fullQuery,
     currentPage,
     perPage,
+    needsRefresh,
+    finishRefresh,
   })
 
   const paginatedProductCards = useMemo(
@@ -49,6 +62,7 @@ export const ProductsProvider = ({ children }) => {
         setPage,
         currentPage,
         paginatedProductCards,
+        categories,
       }}
     >
       {children}
@@ -56,4 +70,4 @@ export const ProductsProvider = ({ children }) => {
   )
 }
 
-export default ProductsContext
+export { ProductsProvider, useProductsContext }

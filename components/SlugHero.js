@@ -1,7 +1,6 @@
 import Rating from "./Rating"
 import ProductInfo from "./ProductInfo"
-import { useContext } from "react"
-import BasketContext from "../context/ShoppingBasket"
+import { useBasketContext } from "../context/ShoppingBasket"
 import styles from "../styles/ProductPage.module.css"
 
 export default function SlugHero({
@@ -11,7 +10,7 @@ export default function SlugHero({
   product,
   wideViewport,
 }) {
-  const { addItem, setOpen, items } = useContext(BasketContext)
+  const { addItem, setOpen, items } = useBasketContext()
 
   const image = product.attributes.Image.data
 

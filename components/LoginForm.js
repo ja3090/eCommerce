@@ -1,9 +1,8 @@
 import styles from "../styles/Login.module.css"
-import AuthContext from "../context/AuthContext"
-import { useContext } from "react"
+import { useAuthContext } from "../context/AuthContext"
 
 export default function LoginForm({ form, handleDetails }) {
-  const { login } = useContext(AuthContext)
+  const { login } = useAuthContext()
   return (
     <form onSubmit={(e) => login(e, form)}>
       <div className={styles.field}>

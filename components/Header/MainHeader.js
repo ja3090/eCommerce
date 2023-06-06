@@ -1,13 +1,12 @@
-import BasketContext from "../../context/ShoppingBasket"
+import { useBasketContext } from "../../context/ShoppingBasket"
 import { resetPosition } from "../../utils/rememberScrollPosition"
-import { useContext } from "react"
 import Logo2 from "../../public/logo2.svg"
 import ShopBag from "../../public/shopping-bag2.svg"
 import styles from "../../styles/Header.module.css"
 import SearchBox from "./SearchBox"
 
 export default function MainHeader({ router }) {
-  const { total, setOpen } = useContext(BasketContext)
+  const { total, setOpen } = useBasketContext()
 
   return (
     <div className={styles["container-main"]}>

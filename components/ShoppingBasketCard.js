@@ -1,11 +1,9 @@
 import styles from "../styles/BasketCard.module.css"
-import BasketContext from "../context/ShoppingBasket"
-import { useContext } from "react"
+import { useBasketContext } from "../context/ShoppingBasket"
 import Cross from "../public/icons/cross.svg"
 
 export default function ShoppingBasketCard({ product }) {
-  const { increaseQuantity, decreaseQuantity, removeItem } =
-    useContext(BasketContext)
+  const { increaseQuantity, decreaseQuantity, removeItem } = useBasketContext()
 
   const imageBackground = {
     backgroundImage: `url(${product.image})`,

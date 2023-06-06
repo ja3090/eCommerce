@@ -1,18 +1,18 @@
 import Layout from "../components/Layout"
 import styles from "../styles/Checkout.module.css"
-import { useContext, useState } from "react"
-import BasketContext from "../context/ShoppingBasket"
+import { useState } from "react"
+import { useBasketContext } from "../context/ShoppingBasket"
 import { loadStripe } from "@stripe/stripe-js"
 import { handleSubmit } from "../utils/postBasket"
-import AuthContext from "../context/AuthContext"
+import { useAuthContext } from "../context/AuthContext"
 import { toast } from "react-toastify"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import ProductList from "../components/ProductList"
 
 const Checkout = () => {
-  const { items, total } = useContext(BasketContext)
-  const { user } = useContext(AuthContext)
+  const { items, total } = useBasketContext()
+  const { user } = useAuthContext()
 
   const [address, _setAddress] = useState({
     name: "Test User",

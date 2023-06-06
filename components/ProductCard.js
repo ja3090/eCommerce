@@ -7,7 +7,6 @@ import { setPageYOffset } from "../utils/rememberScrollPosition"
 
 export default function ProductCard({ product }) {
   const { attributes: productInfo } = product
-  const { formats: image } = product.attributes.Image.data[0].attributes
 
   const [finishedLoading, setFinished] = useState(false)
 
@@ -19,7 +18,7 @@ export default function ProductCard({ product }) {
             src={
               process.env.NODE_ENV === "development"
                 ? "/androidphone-mobile.jpg"
-                : image.medium.url
+                : product.attributes.Image.data[0].attributes.image.medium.url
             }
             alt={productInfo.name}
             layout="fill"

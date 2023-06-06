@@ -1,9 +1,19 @@
-import { createContext, useState } from "react"
+import { createContext, useState, useContext } from "react"
 import useBasket from "../utils/hooks/useBasket"
 
 const BasketContext = createContext()
 
-export const BasketProvider = ({ children }) => {
+function useBasketContext() {
+  const context = useContext(BasketContext)
+  if (context === undefined) {
+    throw new Error(
+      "useBasketContext must be used within a BasketContextProvider"
+    )
+  }
+  return context
+}
+
+const BasketProvider = ({ children }) => {
   const [basketOpen, setOpen] = useState(false)
 
   const {
@@ -35,4 +45,4 @@ export const BasketProvider = ({ children }) => {
   )
 }
 
-export default BasketContext
+export { useBasketContext, BasketProvider }

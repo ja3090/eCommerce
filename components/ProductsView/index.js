@@ -1,13 +1,13 @@
 import styles from "../../styles/ProductsView.module.css"
 import DownArrow from "../../public/icons/down-arrow.svg"
-import ProductsContext from "../../context/ProductsContext"
-import { useContext, useRef, useState } from "react"
+import { useProductsContext } from "../../context/ProductsContext"
+import { useRef, useState } from "react"
 import Pagination from "../Pagination"
 import SortBtns from "./SortBtns"
 import useClickOutsideToClose from "../../utils/hooks/useClickOutsideToClose"
 
 export default function ProductsView() {
-  const { setActive, activeSort, items } = useContext(ProductsContext)
+  const { setActive, activeSort, items } = useProductsContext()
 
   const [isClicked, setClicked] = useState(false)
 

@@ -1,7 +1,6 @@
 import Review from "."
 import styles from "../../styles/ProductPage.module.css"
-import AuthContext from "../../context/AuthContext"
-import { useContext } from "react"
+import { useAuthContext } from "../../context/AuthContext"
 
 export default function ReviewSection({
   averageRating,
@@ -11,7 +10,7 @@ export default function ReviewSection({
   reviews,
   setShown,
 }) {
-  const { user } = useContext(AuthContext)
+  const { user } = useAuthContext()
 
   return (
     <div className={styles["review-section"]}>

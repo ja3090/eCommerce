@@ -1,18 +1,11 @@
 import { useReducer } from "react"
 import { rootReducer } from "../reducers"
+import { useEffect } from "react"
 
 export const initialState = {
   needsRefresh: false,
   filterQueries: {
-    applied: {
-      Computer: false,
-      Laptop: false,
-      Mobile: false,
-      Audio: false,
-      Recording: false,
-      Accessories: false,
-      Photography: false,
-    },
+    applied: {},
     filtersQuery: "",
   },
   sortQueries: {
@@ -32,8 +25,20 @@ export function fullQueryString(state) {
   return () => filterQueries.filtersQuery + sortQuery
 }
 
-export default function useCustomerQueries() {
+export default function useCustomerQueries(categories) {
   const [state, dispatch] = useReducer(rootReducer, initialState)
+
+  const { needsRefresh } = state
+  const { applied, activeSort } = state.filterQueries
+  const { currentPage, perPage } = state.pageQueries
+
+  useEffect(() => {
+    const initialAppliedState = categories.reduce((acc, category) => {
+      return { ...acc, [category.attributes.category]: false }
+    }, {})
+
+    dispatch({ type: "setInitialAppliedState", payload: initialAppliedState })
+  }, [categories])
 
   return {
     applyFilters: () => dispatch({ type: "needsRefresh", payload: true }),
@@ -45,16 +50,16 @@ export default function useCustomerQueries() {
       dispatch({ type: "sort", payload })
       dispatch({ type: "needsRefresh", payload: true })
     },
-    activeSort: state.sortQueries.activeSort,
-    needsRefresh: state.needsRefresh,
     finishRefresh: () => dispatch({ type: "needsRefresh", payload: false }),
     fullQuery: fullQueryString(state),
-    applied: state.filterQueries.applied,
     setPage: () => {
       dispatch({ type: "setPage" })
       dispatch({ type: "needsRefresh", payload: true })
     },
-    currentPage: state.pageQueries.currentPage,
-    perPage: state.pageQueries.perPage,
+    applied,
+    activeSort,
+    currentPage,
+    perPage,
+    needsRefresh,
   }
 }

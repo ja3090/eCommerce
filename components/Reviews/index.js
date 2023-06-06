@@ -2,14 +2,14 @@ import styles from "../../styles/Reviews.module.css"
 import Rating from "../Rating"
 import Edit from "../../public/icons/edit.svg"
 import Bin from "../../public/icons/bin.svg"
-import { useContext, useState } from "react"
-import AuthContext from "../../context/AuthContext"
+import { useState } from "react"
+import { useAuthContext } from "../../context/AuthContext"
 import EditReview from "./EditReview"
 import { removeReview } from "../../utils/reviewService"
 import { toast } from "react-toastify"
 
 export default function Review({ review, product }) {
-  const { user } = useContext(AuthContext)
+  const { user } = useAuthContext()
 
   const { attributes: info } = review
 

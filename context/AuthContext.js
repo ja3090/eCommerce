@@ -1,11 +1,19 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState, useEffect, useContext } from "react"
 import { useRouter } from "next/router"
 import loginService from "../utils/authService"
 import { toast } from "react-toastify"
 
 const AuthContext = createContext()
 
-export const AuthProvider = ({ children }) => {
+const useAuthContext = () => {
+  const context = useContext(AuthContext)
+  if (context === undefined) {
+    throw new Error("useAuthContext must be used within a AuthContextProvider")
+  }
+  return context
+}
+
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [error, setError] = useState(null)
 
@@ -50,4 +58,4 @@ export const AuthProvider = ({ children }) => {
   )
 }
 
-export default AuthContext
+export { useAuthContext, AuthProvider }

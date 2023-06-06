@@ -58,7 +58,7 @@ export default function ProductPage({ product, reviews, averageRating }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${API_URL}/api/products`)
+  const res = await fetch(`${API_URL}/api/products?populate=*`)
   const { data: products } = await res.json()
 
   const paths = products.map((product) => {
@@ -75,7 +75,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { slug } }) {
   const res = await fetch(
-    `${API_URL}/api/products?filters[slug][$eq]=${slug}&populate=*`
+    `${API_URL}/api/products?populate=*&filters[slug][$eq]=${slug}`
   )
   const { data } = await res.json()
   const product = data[0]

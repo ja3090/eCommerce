@@ -3,23 +3,17 @@ import { initialState } from "../hooks/useCustomerQueries"
 function buildFilterQuery(applied) {
   const appliedEntries = Object.entries(applied)
 
-  if (!appliedEntries.length) return ""
-
-  const appliedFilters = appliedEntries.filter(([, filtered]) => filtered)
-
-  function buildFilterString(acc, [category, applied], index) {
-    let returnValue = applied ? acc + `[category][$eq]=${category}` : acc
-
-    if (index !== appliedFilters.length - 1) returnValue += "&filters"
-
-    return returnValue
+  function buildFilterString(acc, [category, applied]) {
+    return applied ? acc + `&filters[category][category][$eq]=${category}` : acc
   }
 
-  return appliedFilters.reduce(buildFilterString, "&filters")
+  return appliedEntries.reduce(buildFilterString, "")
 }
 
 export default function filtersReducer(state, action) {
   switch (action.type) {
+    case "setInitialAppliedState":
+      return { ...state, applied: action.payload }
     case "setApplied":
       const category = action.payload
       const applied = {

@@ -12,7 +12,6 @@
       "error",
       { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
     ],
-    "no-undef": "error",
-    "no-undefined": "error"
+    "no-undef": "error"
   }
 }

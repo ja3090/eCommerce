@@ -3,12 +3,12 @@ import { useGetOrder } from "../../utils/hooks/getOrder"
 import Layout from "../../components/Layout"
 import styles from "../../styles/OrderConfirmedPage.module.css"
 import ProductList from "../../components/ProductList"
-import BasketContext from "../../context/ShoppingBasket"
-import { useEffect, useContext } from "react"
+import { useBasketContext } from "../../context/ShoppingBasket"
+import { useEffect } from "react"
 
 export default function OrderConfirmed() {
   const router = useRouter()
-  const { resetItems } = useContext(BasketContext)
+  const { resetItems } = useBasketContext()
 
   const { uuid } = router.query
 

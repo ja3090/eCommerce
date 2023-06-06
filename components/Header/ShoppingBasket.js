@@ -1,13 +1,12 @@
 import ShoppingBasketCard from "../ShoppingBasketCard"
 import Cross from "../../public/icons/cross.svg"
-import BasketContext from "../../context/ShoppingBasket"
-import { useContext } from "react"
+import { useBasketContext } from "../../context/ShoppingBasket"
 import styles from "../../styles/Header.module.css"
-import AuthContext from "../../context/AuthContext"
+import { useAuthContext } from "../../context/AuthContext"
 
 export default function ShoppingBasket({ router }) {
-  const { items, total, setOpen, basketOpen } = useContext(BasketContext)
-  const { user } = useContext(AuthContext)
+  const { items, total, setOpen, basketOpen } = useBasketContext()
+  const { user } = useAuthContext()
   return (
     <div
       className={`${styles["shopping-basket"]} ${

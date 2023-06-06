@@ -1,11 +1,10 @@
 import Link from "next/link"
-import AuthContext from "../../context/AuthContext"
-import { useContext } from "react"
+import { useAuthContext } from "../../context/AuthContext"
 import GitLogo from "../../public/gitLogo.svg"
 import styles from "../../styles/Header.module.css"
 
 export default function SubHeader() {
-  const { user, logout } = useContext(AuthContext)
+  const { user, logout } = useAuthContext()
   return (
     <div className={styles["header-first-section"]}>
       <a

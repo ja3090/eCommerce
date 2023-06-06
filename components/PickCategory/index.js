@@ -1,21 +1,25 @@
 import styles from "../../styles/PickCategory.module.css"
-import CameraIcon from "../../public/icons/device-camera-image.svg"
-import ComputerIcon from "../../public/icons/device-computer.svg"
-import AudioIcon from "../../public/icons/device-earphone-headphone.svg"
-import LaptopIcon from "../../public/icons/device-laptop-notebook.svg"
-import MicIcon from "../../public/icons/device-microphone-voice.svg"
-import MouseIcon from "../../public/icons/device-mouse-cursor.svg"
 import DownArrow from "../../public/icons/down-arrow.svg"
-import Phone from "../../public/icons/device-smartphone.svg"
-import ProductsContext from "../../context/ProductsContext"
-import { useContext, useState } from "react"
-import Category from "./Category"
+import { useProductsContext } from "../../context/ProductsContext"
+import { useRef, useState } from "react"
+import Categories from "./Categories"
+import useHideButtonIfTooWide from "../../utils/hooks/hideButtonIfTooWide"
 
 export default function PickCategory() {
-  const { applyFilters, clearFilters, applied, setApplied } =
-    useContext(ProductsContext)
+  const { applyFilters, clearFilters, categories, applied, setApplied } =
+    useProductsContext()
 
   const [clicked, setClicked] = useState(false)
+
+  const categoryRefs = useRef([])
+  const containerRef = useRef(null)
+  const viewMoreRef = useRef(null)
+
+  const tooWide = useHideButtonIfTooWide(
+    containerRef,
+    viewMoreRef,
+    categoryRefs
+  )
 
   return (
     <div className={styles.container}>
@@ -29,71 +33,23 @@ export default function PickCategory() {
             className={`${styles.categories} ${
               clicked ? styles["categories-expand"] : ""
             }`}
+            ref={containerRef}
           >
-            <Category
-              handleCategoryClick={setApplied}
-              applied={applied.Computer}
-              categoryName={"Computer"}
-            >
-              <ComputerIcon />
-            </Category>
-            <Category
-              handleCategoryClick={setApplied}
-              applied={applied.Laptop}
-              categoryName={"Laptop"}
-            >
-              <LaptopIcon />
-            </Category>
-            <Category
-              handleCategoryClick={setApplied}
-              applied={applied.Mobile}
-              categoryName={"Mobile"}
-            >
-              <Phone />
-            </Category>
-            <Category
-              handleCategoryClick={setApplied}
-              applied={applied.Audio}
-              categoryName={"Audio"}
-            >
-              <AudioIcon />
-            </Category>
-            <Category
-              handleCategoryClick={setApplied}
-              applied={applied.Recording}
-              categoryName={"Recording"}
-            >
-              <MicIcon />
-            </Category>
-            <Category
-              handleCategoryClick={setApplied}
-              applied={applied.Accessories}
-              categoryName={"Accessories"}
-            >
-              <MouseIcon />
-            </Category>
-            <Category
-              handleCategoryClick={setApplied}
-              applied={applied.Photography}
-              categoryName={"Photography"}
-            >
-              <CameraIcon />
-            </Category>
-            <div
-              className={styles.category}
-              onClick={() => applyFilters(applied)}
-            >
-              <p>Apply</p>
-            </div>
-            <div className={styles.category} onClick={() => clearFilters()}>
-              <p>Clear</p>
-            </div>
+            <Categories
+              categoryRefs={categoryRefs}
+              applyFilters={applyFilters}
+              clearFilters={clearFilters}
+              categories={categories}
+              applied={applied}
+              setApplied={setApplied}
+            />
           </div>
-
           <div
             className={`${styles["view-more"]}
                 ${clicked ? styles.transform : ""}`}
             onClick={() => setClicked(!clicked)}
+            style={tooWide ? null : { display: "none" }}
+            ref={viewMoreRef}
           >
             <DownArrow />
           </div>

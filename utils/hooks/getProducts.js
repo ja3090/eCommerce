@@ -15,11 +15,11 @@ const getProducts = async (perPage, pageNumber, extraQueries = "") => {
 }
 
 export default function useGetProducts({
-  needsRefresh,
-  finishRefresh,
   fullQuery,
   currentPage,
   perPage,
+  needsRefresh,
+  finishRefresh,
 }) {
   const [productData, setProductData] = useState({
     products: [],
@@ -54,7 +54,7 @@ export default function useGetProducts({
     if (!needsRefresh) return
     fetchData(fullQuery())
     finishRefresh()
-  }, [needsRefresh, fullQuery, finishRefresh, currentPage, fetchData])
+  }, [needsRefresh, fullQuery, currentPage, fetchData, finishRefresh])
 
   return { products, totalPages }
 }
