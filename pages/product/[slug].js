@@ -9,7 +9,10 @@ import "react-toastify/dist/ReactToastify.css"
 import { useWindowDimensions } from "../../utils/hooks/windowDimensions"
 import SlugHero from "../../components/SlugHero"
 import ReviewSection from "../../components/Reviews/ReviewSection"
-import { getStaticProductPaths, getStaticProductProps } from "./productGetters"
+import {
+  getStaticProductPaths,
+  getStaticProductProps,
+} from "../../utils/productGetters"
 import useIsTooWide from "../../utils/hooks/isTooWide"
 
 export default function ProductPage({ product, reviews, averageRating }) {
