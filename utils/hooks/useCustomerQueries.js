@@ -29,7 +29,8 @@ export default function useCustomerQueries(categories) {
   const [state, dispatch] = useReducer(rootReducer, initialState)
 
   const { needsRefresh } = state
-  const { applied, activeSort } = state.filterQueries
+  const { activeSort } = state.sortQueries
+  const { applied } = state.filterQueries
   const { currentPage, perPage } = state.pageQueries
 
   useEffect(() => {

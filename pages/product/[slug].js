@@ -1,7 +1,6 @@
 import Layout from "../../components/Layout"
 import ProductInfo from "../../components/ProductInfo"
-import { API_URL } from "../../config/index"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import styles from "../../styles/ProductPage.module.css"
 import WriteReview from "../../components/Reviews/WriteReview"
 import { useRouter } from "next/router"
@@ -10,29 +9,22 @@ import "react-toastify/dist/ReactToastify.css"
 import { useWindowDimensions } from "../../utils/hooks/windowDimensions"
 import SlugHero from "../../components/SlugHero"
 import ReviewSection from "../../components/Reviews/ReviewSection"
+import { getStaticProductPaths, getStaticProductProps } from "./productGetters"
+import useIsTooWide from "../../utils/hooks/isTooWide"
 
 export default function ProductPage({ product, reviews, averageRating }) {
   const router = useRouter()
   const { width } = useWindowDimensions()
+  const wideViewport = useIsTooWide(width, 809)
 
-  const { attributes: item } = product
-
-  const [wideViewport, setIsWide] = useState(false)
   const [showWriteReview, setShown] = useState(false)
 
-  useEffect(() => {
-    const isWide = window.matchMedia("(min-width: 809px)").matches
-    if (wideViewport !== isWide) {
-      setIsWide(isWide)
-    }
-  }, [width, wideViewport])
-
   return (
-    <Layout title={`${item.Name} | Tech eCommerce`}>
+    <Layout title={`${product.attributes.Name} | Tech eCommerce`}>
       <div className={styles.wrap}>
         <ToastContainer />
         <SlugHero
-          item={item}
+          item={product.attributes}
           averageRating={averageRating}
           reviewsLength={reviews.length}
           product={product}
@@ -58,42 +50,9 @@ export default function ProductPage({ product, reviews, averageRating }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${API_URL}/api/products?populate=*`)
-  const { data: products } = await res.json()
-
-  const paths = products.map((product) => {
-    return {
-      params: { slug: product.attributes.slug },
-    }
-  })
-
-  return {
-    paths,
-    fallback: "blocking",
-  }
+  return await getStaticProductPaths()
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  const res = await fetch(
-    `${API_URL}/api/products?populate=*&filters[slug][$eq]=${slug}`
-  )
-  const { data } = await res.json()
-  const product = data[0]
-
-  const reviewsRes = await fetch(
-    `${API_URL}/api/reviews?populate=*&filters[product][id][$eq]=${product.id}`
-  )
-  const { data: reviews } = await reviewsRes.json()
-
-  const averageRating =
-    reviews.reduce((a, b) => a + b.attributes.rating, 0) / reviews.length
-
-  return {
-    props: {
-      product,
-      reviews,
-      averageRating,
-    },
-    revalidate: 10,
-  }
+  return await getStaticProductProps(slug)
 }
