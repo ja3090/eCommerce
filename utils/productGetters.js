@@ -1,4 +1,4 @@
-import { API_URL } from "../../config"
+import { API_URL } from "../config"
 
 export async function getStaticProductProps(slug) {
   const res = await fetch(
