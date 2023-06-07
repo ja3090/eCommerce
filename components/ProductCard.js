@@ -15,11 +15,7 @@ export default function ProductCard({ product }) {
       <a className={styles.container} onClick={() => setPageYOffset()}>
         <div className={styles.image}>
           <Image
-            src={
-              process.env.NODE_ENV === "development"
-                ? "/androidphone-mobile.jpg"
-                : product.attributes.Image.data[0].attributes.image.medium.url
-            }
+            src={product.attributes.Image.data[0].attributes.formats.medium.url}
             alt={productInfo.name}
             layout="fill"
             objectFit="cover"
