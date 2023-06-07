@@ -4,7 +4,9 @@ function buildFilterQuery(applied) {
   const appliedEntries = Object.entries(applied)
 
   function buildFilterString(acc, [category, applied]) {
-    return applied ? acc + `&filters[category][category][$eq]=${category}` : acc
+    return applied
+      ? acc + `&filters[category][categoryName][$eq]=${category}`
+      : acc
   }
 
   return appliedEntries.reduce(buildFilterString, "")

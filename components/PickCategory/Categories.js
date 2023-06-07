@@ -12,13 +12,13 @@ export default function Categories({
   return (
     <>
       {categories.map((entry, index) => {
-        const { category } = entry.attributes
+        const { categoryName } = entry.attributes
         return (
           <div
             className={styles.category}
-            onClick={() => setApplied(category)}
+            onClick={() => setApplied(categoryName)}
             style={
-              applied[category]
+              applied[categoryName]
                 ? { backgroundColor: "rgba(0, 106, 245, .5)" }
                 : null
             }
@@ -28,12 +28,12 @@ export default function Categories({
             <div className={styles["svg-container"]}>
               <Image
                 src={entry.attributes.categoryImage.data.attributes.url}
-                alt={category}
+                alt={categoryName}
                 layout="fill"
                 objectFit="cover"
               />
             </div>
-            <p>{category}</p>
+            <p>{categoryName}</p>
           </div>
         )
       })}

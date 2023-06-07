@@ -16,7 +16,7 @@ export default function Review({ review, product }) {
   const [editModalOpen, setOpen] = useState(false)
 
   if (user) {
-    const sameUser = user.id === info.user.data.id
+    const sameUser = user.id === info.users_permissions_user.data.id
 
     const deleteReview = (e) => {
       e.preventDefault()
@@ -38,7 +38,9 @@ export default function Review({ review, product }) {
             className={styles.author}
             style={sameUser ? { color: "blue" } : {}}
           >
-            {sameUser ? "You" : info.user.data.attributes.username}
+            {sameUser
+              ? "You"
+              : info.users_permissions_user.data.attributes.username}
           </p>
           <p className={styles.date}>{info.createdAt.slice(0, 10)}</p>
           {sameUser ? (
@@ -61,7 +63,9 @@ export default function Review({ review, product }) {
     return (
       <div className={styles["review-container"]}>
         <div className={styles["by-and-date"]}>
-          <p className={styles.author}>{info.user?.data.attributes.username}</p>
+          <p className={styles.author}>
+            {info.users_permissions_user?.data.attributes.username}
+          </p>
           <p className={styles.date}>{info.createdAt.slice(0, 10)}</p>
         </div>
         <Rating rating={info.rating} />

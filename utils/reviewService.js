@@ -1,64 +1,61 @@
 import { NEXT_URL } from "../config"
-import { review } from "./placeholderText"
 
 export const postReview = async (e, { rating, body, heading }, productId) => {
-    e.preventDefault()
+  e.preventDefault()
 
-    const strapiRes = await fetch(`${NEXT_URL}/api/postReview`, {
+  const strapiRes = await fetch(`${NEXT_URL}/api/postReview`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      rating: rating,
+      body: body,
+      heading: heading,
+      product: productId,
+    }),
+  })
 
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            'rating': rating,
-            'body': body,
-            'heading': heading,
-            'product': productId
-        })
-    })
+  const data = await strapiRes.json()
 
-    const data = await strapiRes.json()
-
-    return data
-    
+  return data
 }
 
-export const updateReview = async ({ rating, body, heading }, productId, reviewId) => {
+export const updateReview = async (
+  { rating, body, heading },
+  productId,
+  reviewId
+) => {
+  const strapiRes = await fetch(`${NEXT_URL}/api/editReview`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      rating: rating,
+      body: body,
+      heading: heading,
+      product: productId,
+      reviewId: reviewId,
+    }),
+  })
 
-    const strapiRes = await fetch(`${NEXT_URL}/api/editReview`, {
+  const data = await strapiRes.json()
 
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            'rating': rating,
-            'body': body,
-            'heading': heading,
-            'product': productId,
-            'reviewId': reviewId
-        })
-    })
+  console.log(data)
 
-    const data = await strapiRes.json()
-
-    return data
-    
+  return data
 }
 
 export const removeReview = async (reviewId) => {
+  const strapiRes = await fetch(`${NEXT_URL}/api/delete/${reviewId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
 
-    const strapiRes = await fetch(`${NEXT_URL}/api/delete/${reviewId}`, {
+  const data = await strapiRes.json()
 
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-
-    const data = await strapiRes.json()
-
-    return data
-    
+  return data
 }
