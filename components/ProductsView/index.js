@@ -3,11 +3,11 @@ import DownArrow from "../../public/icons/down-arrow.svg"
 import { useProductsContext } from "../../context/ProductsContext"
 import { useRef, useState } from "react"
 import Pagination from "../Pagination"
-import SortBtns from "./SortBtns"
+import SortButtons from "./SortButtons"
 import useClickOutsideToClose from "../../utils/hooks/useClickOutsideToClose"
 
 export default function ProductsView() {
-  const { setActive, activeSort, items } = useProductsContext()
+  const { items } = useProductsContext()
 
   const [isClicked, setClicked] = useState(false)
 
@@ -26,55 +26,14 @@ export default function ProductsView() {
             ref={sortBtnRef}
           >
             <p>Sort</p>
-            <div
-              className={
-                isClicked ? `${styles.transform} ${styles.svg}` : styles.svg
-              }
-            >
+            <div className={isClicked ? `${styles.transform} ${styles.svg}` : styles.svg}>
               <DownArrow />
             </div>
           </div>
           <div
-            className={
-              isClicked ? `${styles.options} ${styles.show}` : styles.options
-            }
+            className={isClicked ? `${styles.options} ${styles.show}` : styles.options}
           >
-            <SortBtns
-              btnName={"sortAToZ"}
-              activeSort={activeSort}
-              setActive={setActive}
-              sortBy={"Name"}
-              order={"asc"}
-            >
-              A-Z
-            </SortBtns>
-            <SortBtns
-              btnName={"sortZToA"}
-              activeSort={activeSort}
-              setActive={setActive}
-              sortBy={"Name"}
-              order={"desc"}
-            >
-              Z-A
-            </SortBtns>
-            <SortBtns
-              btnName={"sortHToL"}
-              activeSort={activeSort}
-              setActive={setActive}
-              sortBy={"Price"}
-              order={"desc"}
-            >
-              Price H-L
-            </SortBtns>
-            <SortBtns
-              btnName={"sortLToH"}
-              activeSort={activeSort}
-              setActive={setActive}
-              sortBy={"Price"}
-              order={"asc"}
-            >
-              Price L-H
-            </SortBtns>
+            <SortButtons />
           </div>
         </div>
         <Pagination array={items} />

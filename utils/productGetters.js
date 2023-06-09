@@ -1,9 +1,7 @@
 import { API_URL } from "../config"
 
 export async function getStaticProductProps(slug) {
-  const res = await fetch(
-    `${API_URL}/api/products?populate=*&filters[slug][$eq]=${slug}`
-  )
+  const res = await fetch(`${API_URL}/api/products?populate=*&filters[slug][$eq]=${slug}`)
   const { data } = await res.json()
   const product = data[0]
 
@@ -12,8 +10,7 @@ export async function getStaticProductProps(slug) {
   )
   const { data: reviews } = await reviewsRes.json()
 
-  const averageRating =
-    reviews.reduce((a, b) => a + b.attributes.rating, 0) / reviews.length
+  const averageRating = reviews.reduce((a, b) => a + b.attributes.rating, 0) / reviews.length
 
   return {
     props: {

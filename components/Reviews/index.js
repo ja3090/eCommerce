@@ -1,12 +1,10 @@
 import styles from "../../styles/Reviews.module.css"
 import Rating from "../Rating"
-import Edit from "../../public/icons/edit.svg"
-import Bin from "../../public/icons/bin.svg"
 import { useState } from "react"
 import { useAuthContext } from "../../context/AuthContext"
-import EditReview from "./EditReview"
-import { removeReview } from "../../utils/reviewService"
-import { toast } from "react-toastify"
+import SubmitReview from "./SubmitReview"
+import PostOptions from "./PostOptions"
+import { updateReview } from "../../utils/reviewService"
 
 export default function Review({ review, product }) {
   const { user } = useAuthContext()
@@ -15,63 +13,35 @@ export default function Review({ review, product }) {
 
   const [editModalOpen, setOpen] = useState(false)
 
-  if (user) {
-    const sameUser = user.id === info.users_permissions_user.data.id
+  const userAndAuthor = user && user.id === info.users_permissions_user.data.id
 
-    const deleteReview = (e) => {
-      e.preventDefault()
-      removeReview(review.id).then((data) =>
-        toast(data.message, { toastId: "DeleteSuccess" })
-      )
-    }
-
-    return (
-      <div className={styles["review-container"]}>
-        <EditReview
+  return (
+    <div className={styles["review-container"]}>
+      {userAndAuthor ? (
+        // <EditReview
+        //   product={product}
+        //   show={editModalOpen}
+        //   click={setOpen}
+        //   reviewToEdit={review}
+        // />
+        <SubmitReview
           product={product}
           show={editModalOpen}
           click={setOpen}
+          formSubmit={updateReview}
           reviewToEdit={review}
         />
-        <div className={styles["by-and-date"]}>
-          <p
-            className={styles.author}
-            style={sameUser ? { color: "blue" } : {}}
-          >
-            {sameUser
-              ? "You"
-              : info.users_permissions_user.data.attributes.username}
-          </p>
-          <p className={styles.date}>{info.createdAt.slice(0, 10)}</p>
-          {sameUser ? (
-            <div className={styles["post-options"]}>
-              <div onClick={() => setOpen(true)}>
-                <Edit style={{ color: "#FFF" }} />
-              </div>
-              <div onClick={(e) => deleteReview(e)}>
-                <Bin />
-              </div>
-            </div>
-          ) : null}
-        </div>
-        <Rating rating={info.rating} />
-        <h3>{info.heading}</h3>
-        <p>{info.body}</p>
+      ) : null}
+      <div className={styles["by-and-date"]}>
+        <p className={styles.author} style={userAndAuthor ? { color: "blue" } : null}>
+          {userAndAuthor ? "You" : info.users_permissions_user.data.attributes.username}
+        </p>
+        <p className={styles.date}>{info.createdAt.slice(0, 10)}</p>
+        {userAndAuthor ? <PostOptions setOpen={setOpen} reviewId={review.id} /> : null}
       </div>
-    )
-  } else {
-    return (
-      <div className={styles["review-container"]}>
-        <div className={styles["by-and-date"]}>
-          <p className={styles.author}>
-            {info.users_permissions_user?.data.attributes.username}
-          </p>
-          <p className={styles.date}>{info.createdAt.slice(0, 10)}</p>
-        </div>
-        <Rating rating={info.rating} />
-        <h3>{info.heading}</h3>
-        <p>{info.body}</p>
-      </div>
-    )
-  }
+      <Rating rating={info.rating} />
+      <h3>{info.heading}</h3>
+      <p>{info.body}</p>
+    </div>
+  )
 }

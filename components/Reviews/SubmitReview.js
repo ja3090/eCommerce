@@ -1,14 +1,13 @@
 import styles from "../../styles/WriteReview.module.css"
 import { useState } from "react"
-import { updateReview } from "../../utils/reviewService"
 import { toast } from "react-toastify"
 import ReviewForm from "./ReviewForm"
 
-export default function EditReview({ product, show, click, reviewToEdit }) {
+export default function WriteReview({ product, show, click, formSubmit, reviewToEdit }) {
   const [review, setReview] = useState({
-    rating: reviewToEdit.attributes.rating,
-    heading: reviewToEdit.attributes.heading,
-    body: reviewToEdit.attributes.body,
+    rating: reviewToEdit ? reviewToEdit.attributes.rating : null,
+    heading: reviewToEdit ? reviewToEdit.attributes.heading : "",
+    body: reviewToEdit ? reviewToEdit.attributes.body : "",
   })
 
   const handleChange = (e) => {
@@ -19,15 +18,15 @@ export default function EditReview({ product, show, click, reviewToEdit }) {
   const post = (e) => {
     e.preventDefault()
     if (!review.rating || !review.heading || !review.body) {
-      toast.error(`All fields must not be empty`, { toastId: "EditFailure" })
+      toast.error(`All fields must not be empty`, { toastId: "PostFailure" })
       return
     }
-    updateReview(review, product.id, reviewToEdit.id).then((data) => {
-      toast.success(data.message, { toastId: "EditSuccess" })
-      console.log(data.message)
-    })
 
-    click(false)
+    formSubmit(review, product.id, reviewToEdit ? reviewToEdit.id : null).then((data) => {
+      toast.success(data.message, { toastId: "PostSuccess" })
+      setReview({ rating: null, heading: "", body: "" })
+      click(false)
+    })
   }
 
   return (

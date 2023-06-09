@@ -1,25 +1,17 @@
 import styles from "../../styles/PickCategory.module.css"
 import DownArrow from "../../public/icons/down-arrow.svg"
-import { useProductsContext } from "../../context/ProductsContext"
 import { useRef, useState } from "react"
 import Categories from "./Categories"
 import useHideButtonIfTooWide from "../../utils/hooks/hideButtonIfTooWide"
 
 export default function PickCategory() {
-  const { applyFilters, clearFilters, categories, applied, setApplied } =
-    useProductsContext()
-
   const [clicked, setClicked] = useState(false)
 
   const categoryRefs = useRef([])
   const containerRef = useRef(null)
   const viewMoreRef = useRef(null)
 
-  const tooWide = useHideButtonIfTooWide(
-    containerRef,
-    viewMoreRef,
-    categoryRefs
-  )
+  const tooWide = useHideButtonIfTooWide(containerRef, viewMoreRef, categoryRefs)
 
   return (
     <div className={styles.container}>
@@ -35,14 +27,7 @@ export default function PickCategory() {
             }`}
             ref={containerRef}
           >
-            <Categories
-              categoryRefs={categoryRefs}
-              applyFilters={applyFilters}
-              clearFilters={clearFilters}
-              categories={categories}
-              applied={applied}
-              setApplied={setApplied}
-            />
+            <Categories categoryRefs={categoryRefs} />
           </div>
           <div
             className={`${styles["view-more"]}

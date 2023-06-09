@@ -1,8 +1,6 @@
 import { NEXT_URL } from "../config"
 
-export const postReview = async (e, { rating, body, heading }, productId) => {
-  e.preventDefault()
-
+export const postReview = async ({ rating, body, heading }, productId) => {
   const strapiRes = await fetch(`${NEXT_URL}/api/postReview`, {
     method: "POST",
     headers: {
@@ -21,11 +19,7 @@ export const postReview = async (e, { rating, body, heading }, productId) => {
   return data
 }
 
-export const updateReview = async (
-  { rating, body, heading },
-  productId,
-  reviewId
-) => {
+export const updateReview = async ({ rating, body, heading }, productId, reviewId) => {
   const strapiRes = await fetch(`${NEXT_URL}/api/editReview`, {
     method: "PUT",
     headers: {
@@ -41,8 +35,6 @@ export const updateReview = async (
   })
 
   const data = await strapiRes.json()
-
-  console.log(data)
 
   return data
 }

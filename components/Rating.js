@@ -14,10 +14,7 @@ export default function AverageRating({ rating }) {
     if (rating % 1 !== 0) {
       setStars(
         starsSvgs.concat(
-          <Star
-            key={rating}
-            width={starWidth * (rating - roundedDownAverage)}
-          ></Star>
+          <Star key={rating} width={starWidth * (rating - roundedDownAverage)}></Star>
         )
       )
       return

@@ -2,18 +2,16 @@ import Layout from "../../components/Layout"
 import ProductInfo from "../../components/ProductInfo"
 import { useState } from "react"
 import styles from "../../styles/ProductPage.module.css"
-import WriteReview from "../../components/Reviews/WriteReview"
+import SubmitReview from "../../components/Reviews/SubmitReview"
 import { useRouter } from "next/router"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { useWindowDimensions } from "../../utils/hooks/windowDimensions"
 import SlugHero from "../../components/SlugHero"
 import ReviewSection from "../../components/Reviews/ReviewSection"
-import {
-  getStaticProductPaths,
-  getStaticProductProps,
-} from "../../utils/productGetters"
+import { getStaticProductPaths, getStaticProductProps } from "../../utils/productGetters"
 import useIsTooWide from "../../utils/hooks/isTooWide"
+import { postReview } from "../../utils/reviewService"
 
 export default function ProductPage({ product, reviews, averageRating }) {
   const router = useRouter()
@@ -42,10 +40,16 @@ export default function ProductPage({ product, reviews, averageRating }) {
           reviews={reviews}
           setShown={setShown}
         />
-        <WriteReview
+        {/* <WriteReview
           product={product}
           show={showWriteReview}
           click={setShown}
+        /> */}
+        <SubmitReview
+          product={product}
+          show={showWriteReview}
+          click={setShown}
+          formSubmit={postReview}
         />
       </div>
     </Layout>

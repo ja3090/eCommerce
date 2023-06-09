@@ -16,7 +16,7 @@ export default function useGetCategories() {
     const fetchHandler = async () => {
       try {
         const data = await fetchCategories()
-        setCategories(data)
+        setCategories(data ?? [])
       } catch (error) {
         console.error(error)
       }

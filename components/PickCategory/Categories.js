@@ -1,40 +1,24 @@
 import styles from "../../styles/PickCategory.module.css"
-import Image from "next/image"
+import Category from "./Category"
+import { useProductsContext } from "../../context/ProductsContext"
 
-export default function Categories({
-  categories,
-  categoryRefs,
-  clearFilters,
-  applyFilters,
-  applied,
-  setApplied,
-}) {
+export default function Categories({ categoryRefs }) {
+  const { applyFilters, clearFilters, categories, applied, setApplied } =
+    useProductsContext()
   return (
     <>
       {categories.map((entry, index) => {
         const { categoryName } = entry.attributes
         return (
-          <div
-            className={styles.category}
-            onClick={() => setApplied(categoryName)}
-            style={
-              applied[categoryName]
-                ? { backgroundColor: "rgba(0, 106, 245, .5)" }
-                : null
-            }
+          <Category
+            applied={applied}
+            setApplied={setApplied}
+            entry={entry}
             key={entry.id}
-            ref={(category) => (categoryRefs.current[index] = category)}
-          >
-            <div className={styles["svg-container"]}>
-              <Image
-                src={entry.attributes.categoryImage.data.attributes.url}
-                alt={categoryName}
-                layout="fill"
-                objectFit="cover"
-              />
-            </div>
-            <p>{categoryName}</p>
-          </div>
+            categoryName={categoryName}
+            categoryRefs={categoryRefs}
+            index={index}
+          />
         )
       })}
       <div

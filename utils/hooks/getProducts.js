@@ -36,7 +36,7 @@ export default function useGetProducts({
           fullQuery
         )
         setProductData({
-          products: data,
+          products: data ?? [],
           totalPages: Math.ceil(meta.pagination.total / perPage),
         })
       } catch (error) {
