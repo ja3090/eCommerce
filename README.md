@@ -1,51 +1,63 @@
 # Tech E-commerce Frontend
 
-Mock E-commerce Site Made with Next.js and Strapi
+Mock E-commerce Site Built with Next.js and Strapi
+
+## Index
+
+- [Motivation](https://github.com/jaw163/eCommerce#motivation)
+- [Screenshot](https://github.com/jaw163/eCommerce#screenshot)
+- [Features](https://github.com/jaw163/eCommerce#features)
+- [Code Example](https://github.com/jaw163/eCommerce#code-example)
+- [Installation](https://github.com/jaw163/eCommerce#installation)
+- [API Reference](https://github.com/jaw163/eCommerce#api-reference)
+- [Description](https://github.com/jaw163/eCommerce#description)
+- [Mentions](https://github.com/jaw163/eCommerce#mentions)
 
 ## Motivation
 
-The purpose of making this was to produce an application that helped hone my programming skills for real-life use cases, but also to improve my web design skills.
+The purpose of making this was to produce an application that helped hone my programming skills for real-life use cases, but also to improve my web design skills
 
 ## Screenshot
 
 ![Landing Page](/Screenshot.png?raw=true)
 
-## Getting started
+## Features
 
-As for the frontend there are very few dependencies so it should be as straight forward as running npm install in the root directory.
+- Fully dynamic products and categories sections
+- User Authentication
+- Reviews sections and ratings for each product
+- Filtering, sort and pagination
+- Stripe integration
+- Strapi CMS backend for easy maintenance
 
-    "cookie": "^0.5.0"
+## Code Example
 
-This package was used for authentication, that the bearer tokens would be stored as http-only cookies.
+Used custom React hooks ([useCustomerQueries](https://github.com/jaw163/eCommerce/blob/main/utils/hooks/useCustomerQueries.js)) and useReducers ([mainReducer](https://github.com/jaw163/eCommerce/blob/main/utils/reducers/index.js)) so that the code is easily maintainable and features are simple to add in the future
 
-    "react-toastify": "^9.0.8"
+## Installation
 
-This package was used for notifications for the user when making CRUD operations in the review sections of the products. This was mainly used for convenience-sake while I was trying to implement the CRUD functionality on the front and back end.
-
-As for the backend this will require more configuration, mainly due to the fact that you'll need a cloudinary account and some images for the products. The two packages needed are cloudinary-upload-provider and slugify, but these should be installed easily using
+To run locally, download the repo, extract the folder and open your terminal of choice at the root directory and run
 
     npm install
 
-at the root directory once you have cloned it, as the code has already been configured (however you will need to add your Cloudinary API keys in an .env file at the root directory). This Strapi backend can be found here: [Github](https://github.com/jaw162/eCommerce-strapi-backend)
+In the env.example, add the backend url for the NEXT_PUBLIC_API_URL and for the PUBLISHABLE_KEY you need to add your Stripe test account key. A test account is easy to set up but the frontend functions mostly fine without it. For the backend you will need a bit more configuration, namely setting up a Cloudinary account so that you can store some product images, more information on that can be found here: [Github](https://github.com/jaw163/eCommerce-strapi-backend). However if you would like to use the actual live API you can reach out to me and we can discuss it
+
+## API Reference
+
+This project uses the Strapi API, details of which can be found here [Strapi](https://docs.strapi.io/)
 
 ## Description
 
-This is a simple frontend made using React, Next.js and CSS, with HTML being utilised through the power of Next's SSG (important for any business that has an online presence and needs to appear in search engine results). The design for the site was inspired from a few sources which I will list below:
+This is a simple frontend made using React, Next.js and CSS, benefitting from optimal SEO thanks to Next's SSG. A good user experience was a constant concern, which is why a framework like Next.js was used, given its fast loading speeds and ability to address accessibility concerns. Not only that, but behaviours like the browser returning a user to their scroll position upon return to the home page were implemented to ensure a pleasant user experience. 
+
+Throughout good coding standards were implemented and tools like React were used so that this would have a good developer experience also.
+
+## Mentions
+
+Again [Kaboom](https://kaboompics.com/) was used for most of the images, with [Unsplash](https://unsplash.com/) used for the bluetooth keyboard image. The design for the site was inspired from a few sources which I will list below:
 
 -[Vendure Storefront](https://remix-storefront.vendure.io/)
 
 -[Hyperice](https://hyperice.com/)
 
 -[Mammut](https://www.mammut.com/uk/en/category/5818-10/clothing)
-
-While I am pleased with the design, I had some issues with the UX which I'm still not fully happy with. Returning to the previous scroll position on return turned out to be trickier than expected and I couldn't figure out how popular shopping sites did this themselves.
-
-I also had some issues with the filtering, sort and pagination which I (hopefully) resolved by refactoring the code into its own useContext hook (the issue being that props were being passed into several components with the impact of user interaction on each part getting very confusing). This solution may or may not have been less confusing but I will let you decide for yourself, as both versions are viewable on the current version and previous commits.
-
-Everything else thankfully went pretty smoothly, although in the future I think I will definitely be using a CSS framework as I find writing CSS, even with the help of CSS modules in React, to be quite time-consuming and cumbersome.
-
-As for the technology used, I thought the easy dev experience of React and the fast user experience of Next.js was a no-brainer for something potentially as tricky as an eCommerce site. Also, a headless CMS like Strapi made the most sense because this would be extremely easy for non-programmers to use and maintain the site themselves.
-
-## Mentions
-
-Again [Kaboom](https://kaboompics.com/) was used for most of the images, with [Unsplash](https://unsplash.com/) used for the bluetooth keyboard image.
