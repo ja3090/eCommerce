@@ -1,6 +1,14 @@
-# Tech eCommerce Frontend
+# Tech E-commerce Frontend
 
-#### Made with Next.js and Strapi
+Mock E-commerce Site Made with Next.js and Strapi
+
+## Motivation
+
+The purpose of making this was to produce an application that helped hone my programming skills for real-life use cases, but also to improve my web design skills.
+
+## Screenshot
+
+![Landing Page](/Screenshot.png?raw=true)
 
 ## Getting started
 
