@@ -3,15 +3,23 @@ import DownArrow from "../../public/icons/down-arrow.svg"
 import { useRef, useState } from "react"
 import Categories from "./Categories"
 import useHideButtonIfTooWide from "../../utils/hooks/hideButtonIfTooWide"
+import { useProductsContext } from "../../context/ProductsContext"
 
 export default function PickCategory() {
+  const { categoriesLoaded } = useProductsContext()
+
   const [clicked, setClicked] = useState(false)
 
   const categoryRefs = useRef([])
   const containerRef = useRef(null)
   const viewMoreRef = useRef(null)
 
-  const tooWide = useHideButtonIfTooWide(containerRef, viewMoreRef, categoryRefs)
+  const isTooWide = useHideButtonIfTooWide(
+    containerRef,
+    viewMoreRef,
+    categoriesLoaded,
+    categoryRefs
+  )
 
   return (
     <div className={styles.container}>
@@ -33,7 +41,7 @@ export default function PickCategory() {
             className={`${styles["view-more"]}
                 ${clicked ? styles.transform : ""}`}
             onClick={() => setClicked(!clicked)}
-            style={tooWide ? null : { display: "none" }}
+            style={isTooWide ? null : { display: "none" }}
             ref={viewMoreRef}
           >
             <DownArrow />

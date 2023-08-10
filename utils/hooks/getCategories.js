@@ -10,13 +10,13 @@ async function fetchCategories() {
 }
 
 export default function useGetCategories() {
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState({ categories: [], loaded: false })
 
   useEffect(() => {
     const fetchHandler = async () => {
       try {
         const data = await fetchCategories()
-        setCategories(data ?? [])
+        setCategories({ categories: data ?? [], loaded: true })
       } catch (error) {
         console.error(error)
       }

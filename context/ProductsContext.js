@@ -10,15 +10,13 @@ const ProductsContext = createContext()
 const useProductsContext = () => {
   const context = useContext(ProductsContext)
   if (context === undefined) {
-    throw new Error(
-      "useProductsContext must be used within a ProductsContextProvider"
-    )
+    throw new Error("useProductsContext must be used within a ProductsContextProvider")
   }
   return context
 }
 
 const ProductsProvider = ({ children }) => {
-  const categories = useGetCategories()
+  const { categories, categoriesLoaded } = useGetCategories()
 
   const {
     applyFilters,
@@ -63,6 +61,7 @@ const ProductsProvider = ({ children }) => {
         currentPage,
         paginatedProductCards,
         categories,
+        categoriesLoaded,
       }}
     >
       {children}

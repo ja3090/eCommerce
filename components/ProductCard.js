@@ -5,8 +5,20 @@ import SkelProductCard from "./SkelProductCard"
 import { useState } from "react"
 import { setPageYOffset } from "../utils/rememberScrollPosition"
 
+const addOption = (url, ...options) => {
+  const splitUrl = url.split("/upload")
+  const urlOptions = options.join("/")
+
+  const [first, second] = splitUrl
+
+  return first + "/upload/" + urlOptions + second
+}
+
 export default function ProductCard({ product }) {
   const { attributes: productInfo } = product
+  const image = product.attributes.Image.data[0].attributes.formats.medium.url
+
+  const placeholder = addOption(image, "pixelate:50")
 
   const [finishedLoading, setFinished] = useState(false)
 
@@ -20,17 +32,23 @@ export default function ProductCard({ product }) {
             layout="fill"
             objectFit="cover"
             objectPosition="center"
-            onLoadingComplete={() => setFinished(true)}
+            // onLoadingComplete={() => setFinished(true)}
+            placeholder={"blur"}
+            // blurDataURL={placeholder}
             unoptimized
           />
         </div>
-        {finishedLoading ? (
+        {/* {finishedLoading ? (
           <div className={styles.info}>
             <p>{productInfo.Name}</p>
             <p>£{productInfo.Price}</p>
           </div>
-        ) : null}
-        {finishedLoading ? null : <SkelProductCard />}
+        ) : null} */}
+        <div className={styles.info}>
+          <p>{productInfo.Name}</p>
+          <p>£{productInfo.Price}</p>
+        </div>
+        {/* {finishedLoading ? null : <SkelProductCard />} */}
       </a>
     </Link>
   )
