@@ -4,6 +4,7 @@ Mock E-commerce Site Built with Next.js and Strapi.
 
 ## Index
 
+- [Versions](https://github.com/jaw163/eCommerce#versions)
 - [Motivation](https://github.com/jaw163/eCommerce#motivation)
 - [Screenshot](https://github.com/jaw163/eCommerce#screenshot)
 - [Features](https://github.com/jaw163/eCommerce#features)
