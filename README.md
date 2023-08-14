@@ -13,6 +13,10 @@ Mock E-commerce Site Built with Next.js and Strapi.
 - [Description](https://github.com/jaw163/eCommerce#description)
 - [Mentions](https://github.com/jaw163/eCommerce#mentions)
 
+## Versions
+
+    "next": "12.3.1"
+
 ## Motivation
 
 The purpose of making this was to produce an application that helped hone my programming skills for real-life use cases, but also to improve my web design skills.
