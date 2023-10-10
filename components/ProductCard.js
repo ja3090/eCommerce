@@ -1,14 +1,17 @@
-// import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/ProductCard.module.css";
 import { setPageYOffset } from "../utils/rememberScrollPosition";
 import { Cloudinary } from "@cloudinary/url-gen";
-import { AdvancedImage, placeholder } from "@cloudinary/react";
+import { AdvancedImage, placeholder, responsive } from "@cloudinary/react";
+import { scale } from "@cloudinary/url-gen/actions/resize";
 
 export default function ProductCard({ product }) {
   const { attributes: productInfo } = product;
-  const imageUrl =
+  const blurImageUrl =
     product.attributes.Image.data[0].attributes.formats.small.hash;
+  const imageUrl =
+    product.attributes.Image.data[0].attributes.formats.small.url;
 
   const cld = new Cloudinary({
     cloud: {
@@ -16,25 +19,23 @@ export default function ProductCard({ product }) {
     },
   });
 
-  const image = cld.image(imageUrl);
+  const image = cld.image(blurImageUrl).resize(scale().width(9)).toURL();
 
-  console.log(product.attributes.Image.data[0].attributes.formats.medium.hash);
+  console.log(image);
 
   return (
     <Link href={`/product/${product.attributes.slug}`}>
       <a className={styles.container} onClick={() => setPageYOffset()}>
         <div className={styles.image}>
-          {/* <Image
+          <Image
             src={imageUrl}
             alt={productInfo.name}
             layout="fill"
             objectFit="cover"
             objectPosition="center"
+            placeholder="blur"
+            blurDataURL={image}
             unoptimized
-          /> */}
-          <AdvancedImage
-            cldImg={image}
-            plugins={[placeholder({ mode: "blur" })]}
           />
         </div>
         <div className={styles.info}>
