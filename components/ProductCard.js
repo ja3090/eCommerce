@@ -1,55 +1,47 @@
-import Image from "next/image"
-import Link from "next/link"
-import styles from "../styles/ProductCard.module.css"
-import SkelProductCard from "./SkelProductCard"
-import { useState } from "react"
-import { setPageYOffset } from "../utils/rememberScrollPosition"
-
-const addOption = (url, ...options) => {
-  const splitUrl = url.split("/upload")
-  const urlOptions = options.join("/")
-
-  const [first, second] = splitUrl
-
-  return first + "/upload/" + urlOptions + second
-}
+// import Image from "next/image";
+import Link from "next/link";
+import styles from "../styles/ProductCard.module.css";
+import { setPageYOffset } from "../utils/rememberScrollPosition";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, placeholder } from "@cloudinary/react";
 
 export default function ProductCard({ product }) {
-  const { attributes: productInfo } = product
-  const image = product.attributes.Image.data[0].attributes.formats.medium.url
+  const { attributes: productInfo } = product;
+  const imageUrl =
+    product.attributes.Image.data[0].attributes.formats.small.hash;
 
-  const placeholder = addOption(image, "pixelate:50")
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_NAME,
+    },
+  });
 
-  const [finishedLoading, setFinished] = useState(false)
+  const image = cld.image(imageUrl);
+
+  console.log(product.attributes.Image.data[0].attributes.formats.medium.hash);
 
   return (
     <Link href={`/product/${product.attributes.slug}`}>
       <a className={styles.container} onClick={() => setPageYOffset()}>
         <div className={styles.image}>
-          <Image
-            src={product.attributes.Image.data[0].attributes.formats.medium.url}
+          {/* <Image
+            src={imageUrl}
             alt={productInfo.name}
             layout="fill"
             objectFit="cover"
             objectPosition="center"
-            // onLoadingComplete={() => setFinished(true)}
-            placeholder={"blur"}
-            // blurDataURL={placeholder}
             unoptimized
+          /> */}
+          <AdvancedImage
+            cldImg={image}
+            plugins={[placeholder({ mode: "blur" })]}
           />
         </div>
-        {/* {finishedLoading ? (
-          <div className={styles.info}>
-            <p>{productInfo.Name}</p>
-            <p>£{productInfo.Price}</p>
-          </div>
-        ) : null} */}
         <div className={styles.info}>
           <p>{productInfo.Name}</p>
           <p>£{productInfo.Price}</p>
         </div>
-        {/* {finishedLoading ? null : <SkelProductCard />} */}
       </a>
     </Link>
-  )
+  );
 }

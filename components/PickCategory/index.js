@@ -1,25 +1,43 @@
-import styles from "../../styles/PickCategory.module.css"
-import DownArrow from "../../public/icons/down-arrow.svg"
-import { useRef, useState } from "react"
-import Categories from "./Categories"
-import useHideButtonIfTooWide from "../../utils/hooks/hideButtonIfTooWide"
-import { useProductsContext } from "../../context/ProductsContext"
+import styles from "../../styles/PickCategory.module.css";
+import DownArrow from "../../public/icons/down-arrow.svg";
+import { useRef, useState } from "react";
+import Categories from "./Categories";
+import { useProductsContext } from "../../context/ProductsContext";
+import { useEffect } from "react";
 
 export default function PickCategory() {
-  const { categoriesLoaded } = useProductsContext()
+  const { applyFilters, clearFilters, categories, applied, setApplied } =
+    useProductsContext();
 
-  const [clicked, setClicked] = useState(false)
+  const [clicked, setClicked] = useState(false);
 
-  const categoryRefs = useRef([])
-  const containerRef = useRef(null)
-  const viewMoreRef = useRef(null)
+  const categoryRefs = useRef([]);
+  const containerRef = useRef(null);
 
-  const isTooWide = useHideButtonIfTooWide(
-    containerRef,
-    viewMoreRef,
-    categoriesLoaded,
-    categoryRefs
-  )
+  const [isTooWide, setisTooWide] = useState(false);
+
+  useEffect(() => {
+    const isTooWide2 = () => {
+      const isWide =
+        categoryRefs.current.length > categories.length &&
+        categoryRefs.current[0]?.offsetWidth * categoryRefs.current.length >
+          containerRef.current?.offsetWidth;
+
+      setisTooWide(isWide);
+    };
+
+    isTooWide2();
+
+    window.addEventListener("resize", isTooWide2);
+
+    return () => {
+      window.removeEventListener("resize", isTooWide2);
+    };
+  }, [
+    categories.length,
+    categoryRefs.current.length,
+    containerRef.current?.offsetWidth,
+  ]);
 
   return (
     <div className={styles.container}>
@@ -35,19 +53,30 @@ export default function PickCategory() {
             }`}
             ref={containerRef}
           >
-            <Categories categoryRefs={categoryRefs} />
+            {categories.length ? (
+              <>
+                <Categories
+                  categoryRefs={categoryRefs}
+                  applyFilters={applyFilters}
+                  clearFilters={clearFilters}
+                  categories={categories}
+                  applied={applied}
+                  setApplied={setApplied}
+                />
+              </>
+            ) : null}
           </div>
           <div
             className={`${styles["view-more"]}
-                ${clicked ? styles.transform : ""}`}
+                    ${clicked ? styles.transform : ""}`}
             onClick={() => setClicked(!clicked)}
             style={isTooWide ? null : { display: "none" }}
-            ref={viewMoreRef}
+            // ref={viewMoreRef}
           >
             <DownArrow />
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,14 +1,18 @@
-import styles from "../../styles/PickCategory.module.css"
-import Category from "./Category"
-import { useProductsContext } from "../../context/ProductsContext"
+import styles from "../../styles/PickCategory.module.css";
+import Category from "./Category";
 
-export default function Categories({ categoryRefs }) {
-  const { applyFilters, clearFilters, categories, applied, setApplied } =
-    useProductsContext()
+export default function Categories({
+  categoryRefs,
+  applyFilters,
+  clearFilters,
+  categories,
+  applied,
+  setApplied,
+}) {
   return (
     <>
       {categories.map((entry, index) => {
-        const { categoryName } = entry.attributes
+        const { categoryName } = entry.attributes;
         return (
           <Category
             applied={applied}
@@ -19,7 +23,7 @@ export default function Categories({ categoryRefs }) {
             categoryRefs={categoryRefs}
             index={index}
           />
-        )
+        );
       })}
       <div
         ref={(button) => (categoryRefs.current[categories.length] = button)}
@@ -36,5 +40,5 @@ export default function Categories({ categoryRefs }) {
         <p>Clear</p>
       </div>
     </>
-  )
+  );
 }

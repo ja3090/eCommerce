@@ -1,22 +1,25 @@
-import { createContext, useContext } from "react"
-import { useMemo } from "react"
-import ProductCard from "../components/ProductCard"
-import useGetProducts from "../utils/hooks/getProducts"
-import useCustomerQueries from "../utils/hooks/useCustomerQueries"
-import useGetCategories from "../utils/hooks/getCategories"
+import { createContext, useContext } from "react";
+import { useMemo } from "react";
+import ProductCard from "../components/ProductCard";
+import useGetProducts from "../utils/hooks/getProducts";
+import useCustomerQueries from "../utils/hooks/useCustomerQueries";
+import useGetCategories from "../utils/hooks/getCategories";
 
-const ProductsContext = createContext()
+const ProductsContext = createContext();
 
 const useProductsContext = () => {
-  const context = useContext(ProductsContext)
+  const context = useContext(ProductsContext);
+
   if (context === undefined) {
-    throw new Error("useProductsContext must be used within a ProductsContextProvider")
+    throw new Error(
+      "useProductsContext must be used within a ProductsContextProvider"
+    );
   }
-  return context
-}
+  return context;
+};
 
 const ProductsProvider = ({ children }) => {
-  const { categories, categoriesLoaded } = useGetCategories()
+  const { categories, categoriesLoaded } = useGetCategories();
 
   const {
     applyFilters,
@@ -31,7 +34,7 @@ const ProductsProvider = ({ children }) => {
     perPage,
     finishRefresh,
     needsRefresh,
-  } = useCustomerQueries(categories)
+  } = useCustomerQueries(categories);
 
   const { products, totalPages } = useGetProducts({
     fullQuery,
@@ -39,12 +42,12 @@ const ProductsProvider = ({ children }) => {
     perPage,
     needsRefresh,
     finishRefresh,
-  })
+  });
 
   const paginatedProductCards = useMemo(
     () => products.map((item) => <ProductCard key={item.id} product={item} />),
     [products]
-  )
+  );
 
   return (
     <ProductsContext.Provider
@@ -66,7 +69,7 @@ const ProductsProvider = ({ children }) => {
     >
       {children}
     </ProductsContext.Provider>
-  )
-}
+  );
+};
 
-export { ProductsProvider, useProductsContext }
+export { ProductsProvider, useProductsContext };

@@ -1,29 +1,32 @@
-import { useEffect, useState } from "react"
-import { API_URL } from "../../config"
+import { useEffect, useState } from "react";
+import { API_URL } from "../../config";
 
 async function fetchCategories() {
-  const res = await fetch(`${API_URL}/api/categories?populate=*`)
+  const res = await fetch(`${API_URL}/api/categories?populate=*`);
 
-  const { data } = await res.json()
+  const { data } = await res.json();
 
-  return data
+  return data;
 }
 
 export default function useGetCategories() {
-  const [categories, setCategories] = useState({ categories: [], loaded: false })
+  const [categories, setCategories] = useState({
+    categories: [],
+    loaded: false,
+  });
 
   useEffect(() => {
     const fetchHandler = async () => {
       try {
-        const data = await fetchCategories()
-        setCategories({ categories: data ?? [], loaded: true })
+        const data = await fetchCategories();
+        setCategories({ categories: data ?? [], loaded: true });
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
+    };
 
-    fetchHandler()
-  }, [])
+    fetchHandler();
+  }, []);
 
-  return categories
+  return categories;
 }
