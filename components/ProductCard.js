@@ -3,7 +3,6 @@ import Link from "next/link";
 import styles from "../styles/ProductCard.module.css";
 import { setPageYOffset } from "../utils/rememberScrollPosition";
 import { Cloudinary } from "@cloudinary/url-gen";
-import { AdvancedImage, placeholder, responsive } from "@cloudinary/react";
 import { scale } from "@cloudinary/url-gen/actions/resize";
 
 export default function ProductCard({ product }) {
@@ -20,8 +19,6 @@ export default function ProductCard({ product }) {
   });
 
   const image = cld.image(blurImageUrl).resize(scale().width(9)).toURL();
-
-  console.log(image);
 
   return (
     <Link href={`/product/${product.attributes.slug}`}>
